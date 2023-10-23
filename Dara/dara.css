@@ -1,0 +1,135 @@
+@font-face {
+    font-family: 'myfont';
+    src: url('Comfortaa-VariableFont_wght.ttf') format('truetype');
+}
+
+/* Titulo*/
+.board{
+    background-color: aqua;
+}
+
+.pieces{
+    background-color: aqua;
+}
+
+.logo{
+    text-align: center;
+}
+
+span{
+    position: sticky;
+    color: white;
+    font-style: normal;
+    font-size: 60px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.848);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
+
+}
+
+/*  body */
+body{
+    background-color: rgba(255, 233, 123, 0.878)
+}
+/* Contem as tres Boxes principais  ( Instructions,Config e Highscore) */
+.container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap 10px;
+}
+
+h1{ /* referente ao texto que aparece dentro das caixas em grande */
+    padding: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    line-break: 5px;
+    text-align: center;
+}
+
+.configs{
+    position: sticky;
+    grid-column: 2;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 30px;
+    color: white;
+    font-style: normal;
+    font-size: 20px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.848);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
+    width:20%;
+    height: 53%;
+    
+}
+#board_size:hover,
+#oponents:hover,
+#firstsecond:hover,
+#difficulty:hover,
+#play:hover,#reset:hover,.instrbutton:hover{
+    color: rgba(0, 0, 0, 0.532)
+}
+
+#play,#reset{
+    margin: 8px;
+    margin-left: 125px;
+    margin-top: 12px;
+    color: white;
+    background-color: rgba(0,0,0,0);
+    border:none;
+    padding:5px;
+    font-size: 30px;
+    font-family: "myfont", sans-serif;
+    
+}
+
+select{
+
+    size: 25px;
+    font-size: 20px;
+    color: white;
+    background-color: rgba(29, 27, 27, 0);
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.highscores{
+    text-align: right;
+    padding: 43px;
+    
+    border-radius: 30px;
+    color: white;
+    font-style: normal;
+    font-size: 20px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.848);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
+    width:15%;
+    height: 100%;
+}
+
+.instructions{
+    padding: 20px;
+    margin-left: 20px;
+    border-radius: 30px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.848);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
+    width:20%;
+    height: 100%;
+}
+.instrbutton{
+    color: white;
+    background-color: rgba(0,0,0,0);
+    margin-left: 15px;
+    border: none;
+    font-size: 25px;
+    font-weight: bold;
+    font-style: normal;
+}
+
+ol{
+    line-height:1.5;
+}

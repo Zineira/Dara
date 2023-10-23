@@ -1,0 +1,154 @@
+.logo{
+    text-align: center;
+}
+
+span{
+    color: white;
+    font-style: normal;
+    font-size: 60px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.848);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
+
+}
+
+/*  body */
+body {
+    background-color: rgba(255, 233, 123, 0.878);
+    cursor: default;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.);
+}
+
+.leftbox{
+    overflow: auto;
+    grid-column: 1;
+    border-radius: 20px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.848);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834); 
+    height: 80vh;
+}
+
+.instructions{
+    margin-top: 50px;
+    margin-left: 25px;
+}
+
+.configs{
+    margin-top: 60px;
+    flex-wrap: wrap;
+    margin-left: 25px;
+    color: white;
+    font-style: normal;
+    font-size: 18px;
+    justify-content: left;
+}
+
+.defs{
+    margin-left:-50px;
+}
+
+select{
+    margin-left: 20px;
+    size: 25px;
+    font-size: 18px;
+    color: white;
+    background-color: rgba(29, 27, 27, 0);
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+
+.box-main {
+    justify-content: center;
+    align-items: center;
+    grid-column: span 3;
+    border-radius: 20px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.847);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
+    height: 80vh;
+}
+
+#board {
+    margin-left: -3%;
+    margin-top: 15%;
+    align-items: center;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(6, 50px);
+    grid-template-rows: repeat(5, 50px);
+    gap: 60px;
+}
+
+.square {
+    width: 100px;
+    height: 100px;
+    border: 2px solid rgba(42, 89, 146, 0.5);;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.square:hover {
+    transition-duration: 0s;
+}
+.rules{
+    color: white;
+    font-size: 20px;
+    overflow: auto;
+    width: 100%;
+    display: none;
+    margin-left: 20px;
+}
+
+.rightbox{
+    grid-column: 5;
+    border-radius: 20px;
+    font-style: normal;
+    font-size: 20px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.848);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
+    height: 80vh;
+}
+
+#instrbutton, #rankbutton, #play{
+    color: white;
+    background-color: rgba(0,0,0,0);
+    margin-left: 15px;
+    border: none;
+    font-size: 25px;
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+#board_size,
+#oponents,
+#firstsecond,
+#difficulty{
+    margin-left: 15px;
+}
+
+#board_size:hover,
+#oponents:hover,
+#firstsecond:hover,
+#difficulty:hover{
+    color: rgba(0, 0, 0, 0.532);
+}
+#play{
+    margin-top: 20px;
+    margin-left: 80px;
+}
+#instrbutton:hover, #rankbutton:hover, #play:hover{
+    color: rgba(0, 0, 0, 0.532);
+    cursor: pointer;
+}
