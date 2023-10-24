@@ -30,10 +30,14 @@ function getRandomColor(){
 }
 
 document.getElementById('instrbutton').addEventListener('click', function() {
-    var rules = document.getElementById('rules');
-    if (rules.style.display === 'none') {
-        rules.style.display = 'show';
+    var box1 = document.querySelector('.rules');
+    var box2 = document.querySelector('#board')
+    
+    if (box1.style.display === 'none') {
+        box1.style.display = 'block';
+        box2.style.display = 'none';
     } else {
-        rules.style.display = 'none';
+        box1.style.display = 'none';
+        box2.style.display = 'block grid';
     }
 });
