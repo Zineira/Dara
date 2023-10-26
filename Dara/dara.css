@@ -1,23 +1,8 @@
-@font-face {
-    font-family: 'myfont';
-    src: url('Comfortaa-VariableFont_wght.ttf') format('truetype');
-}
-
-/* Titulo*/
-.board{
-    background-color: aqua;
-}
-
-.pieces{
-    background-color: aqua;
-}
-
 .logo{
     text-align: center;
 }
 
 span{
-    position: sticky;
     color: white;
     font-style: normal;
     font-size: 60px;
@@ -28,65 +13,62 @@ span{
 }
 
 /*  body */
-body{
-    background-color: rgba(255, 233, 123, 0.878)
-}
-/* Contem as tres Boxes principais  ( Instructions,Config e Highscore) */
-.container{
-    display: grid;
-    grid-template-columns: auto auto auto;
-    gap 10px;
+body {
+    background-color: rgba(255, 233, 123, 0.878);
+    cursor: default;
 }
 
-h1{ /* referente ao texto que aparece dentro das caixas em grande */
-    padding: 10px;
-    font-size: 30px;
-    font-weight: bold;
-    line-break: 5px;
-    text-align: center;
+.container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0); /* Torná-la transparente */
+    z-index: 999; /* Coloque-a acima de todos os outros elementos */
+    display: none; /* Inicialmente oculta */
+}
+
+.leftbox{
+    overflow: auto;
+    grid-column: 1;
+    border-radius: 20px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.848);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834); 
+    height: 80vh;
+}
+
+.instructions{
+    margin-top: 50px;
+    margin-left: 25px;
 }
 
 .configs{
-    position: sticky;
-    grid-column: 2;
-    padding: 20px;
-    margin: 20px;
-    border-radius: 30px;
+    margin-top: 60px;
+    flex-wrap: wrap;
+    margin-left: 25px;
     color: white;
     font-style: normal;
-    font-size: 20px;
-    border: 3px solid rgba(244, 230, 243, 0.468);
-    background-color:rgba(104, 160, 229, 0.848);
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
-    width:20%;
-    height: 53%;
-    
-}
-#board_size:hover,
-#oponents:hover,
-#firstsecond:hover,
-#difficulty:hover,
-#play:hover,#reset:hover,.instrbutton:hover{
-    color: rgba(0, 0, 0, 0.532)
+    font-size: 18px;
+    justify-content: left;
 }
 
-#play,#reset{
-    margin: 8px;
-    margin-left: 125px;
-    margin-top: 12px;
-    color: white;
-    background-color: rgba(0,0,0,0);
-    border:none;
-    padding:5px;
-    font-size: 30px;
-    font-family: "myfont", sans-serif;
-    
+.defs{
+    margin-left:-50px;
 }
 
 select{
-
+    margin-left: 20px;
     size: 25px;
-    font-size: 20px;
+    font-size: 18px;
     color: white;
     background-color: rgba(29, 27, 27, 0);
     border: none;
@@ -95,32 +77,104 @@ select{
     margin-top: 5px;
 }
 
-.highscores{
-    text-align: right;
-    padding: 43px;
-    
-    border-radius: 30px;
+.loginbox{
     color: white;
+    font-style: normal;
+    font-size: 60px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.848);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
+}
+
+.introbox{
+    justify-content: center;
+    align-items: center;
+    grid-column: span 3;
+    border-radius: 20px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.847);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
+    height: 80vh;
+}
+
+.box-main {
+    display:grid;
+    justify-content: center;
+    align-items: center;
+    grid-column: span 3;
+    border-radius: 20px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.847);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
+    height: 80vh;
+}
+
+#board {
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(5, 50px);
+    grid-template-rows: repeat(5, 50px);
+    gap: 10px;
+}
+.rules{
+    display: none; 
+    overflow: auto;
+    justify-content: center;
+    align-items: center;
+    grid-column: span 3;
+    border-radius: 20px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.847);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
+    height: 80vh;
+    
+}
+#rules{
+    margin-left: 50px;
+    color: white;
+    font-size: 20px;
+    overflow: auto;
+    padding: 20px;
+}
+.score{
+    display: none;
+    overflow: auto;
+    justify-content: center;
+    align-items: center;
+    grid-column: span 3;
+    border-radius: 20px;
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    background-color:rgba(104, 160, 229, 0.847);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
+    height: 80vh;
+    
+}
+.square {
+    width: 55px;
+    height: 55px;
+    border: 2px solid rgba(42, 89, 146, 0.5);;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.square:hover {
+    transition-duration: 0s;
+}
+
+
+.rightbox{
+    grid-column: 5;
+    border-radius: 20px;
     font-style: normal;
     font-size: 20px;
     border: 3px solid rgba(244, 230, 243, 0.468);
     background-color:rgba(104, 160, 229, 0.848);
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
-    width:15%;
-    height: 100%;
+    height: 80vh;
 }
 
-.instructions{
-    padding: 20px;
-    margin-left: 20px;
-    border-radius: 30px;
-    border: 3px solid rgba(244, 230, 243, 0.468);
-    background-color:rgba(104, 160, 229, 0.848);
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
-    width:20%;
-    height: 100%;
-}
-.instrbutton{
+#instrbutton, #rankbutton, #play{
     color: white;
     background-color: rgba(0,0,0,0);
     margin-left: 15px;
@@ -130,6 +184,25 @@ select{
     font-style: normal;
 }
 
-ol{
-    line-height:1.5;
+
+#board_size,
+#oponents,
+#firstsecond,
+#difficulty{
+    margin-left: 15px;
+}
+
+#board_size:hover,
+#oponents:hover,
+#firstsecond:hover,
+#difficulty:hover{
+    color: rgba(0, 0, 0, 0.532);
+}
+#play{
+    margin-top: 20px;
+    margin-left: 80px;
+}
+#instrbutton:hover, #rankbutton:hover, #play:hover{
+    color: rgba(0, 0, 0, 0.532);
+    cursor: pointer;
 }
