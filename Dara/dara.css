@@ -113,9 +113,9 @@ select{
     justify-content: center;
     align-items: center;
     display: grid;
-    grid-template-columns: repeat(5, 50px);
+    grid-template-columns: repeat(6, 50px);
     grid-template-rows: repeat(5, 50px);
-    gap: 10px;
+    gap: 19px;
 }
 .rules{
     display: none; 
@@ -130,6 +130,8 @@ select{
     height: 80vh;
     
 }
+
+
 #rules{
     margin-left: 50px;
     color: white;
@@ -151,8 +153,8 @@ select{
     
 }
 .square {
-    width: 55px;
-    height: 55px;
+    width: 65px;
+    height: 65px;
     border: 2px solid rgba(42, 89, 146, 0.5);;
     display: flex;
     justify-content: center;
@@ -164,6 +166,7 @@ select{
 
 
 .rightbox{
+    overflow: auto;
     grid-column: 5;
     border-radius: 20px;
     font-style: normal;
@@ -190,6 +193,39 @@ select{
 #firstsecond,
 #difficulty{
     margin-left: 15px;
+}
+.pieces {
+    display: grid;
+    grid-template-columns: repeat(6, 50px);
+    gap: 5px;
+    justify-content: center;
+}
+
+/* Estilos das peças */
+.pieces div {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.white{
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    position: absolute;
+    box-shadow: 2px 2px 5px rgba(0,0,0);
+    border-radius: 50%;
+    
+}
+.black{
+    width: 50px;
+    height: 50px;
+    background-color: black;
+    margin-top:500px;
+    position: relative;
+    box-shadow: 2px 2px 5px rgba(0,0,0);
+    border-radius: 50%;
 }
 
 #board_size:hover,
