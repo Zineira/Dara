@@ -1,7 +1,17 @@
 const rightbox = document.querySelector('.rightbox');
 const pieces = document.querySelector('.pieces');
 const colors = ['#123456'];
+const SQUARES_NUM_1 =30;
 
+for(let i =0;i <SQUARES_NUM_1;i++){
+    const square = document.createElement('div');
+    square.classList.add('square')
+
+    square.addEventListener('mouseover', () => setColor(square))
+    square.addEventListener('mouseout', () => resetColor(square))
+
+    board.append(square)
+}
 // Crie e posicione as peças na "rightbox"
 function createPiece(className) {
     const piece = document.createElement("div");
@@ -19,7 +29,6 @@ for (let i = 0; i < 12; i++) {
 function setColor(element) {
     const color = getRandomColor();
     element.style.backgroundColor = color;
-    element.style.boxShadow = `0 0 2px ${color}, 0 0 10px ${color}`;
 }
 
 function resetColor(element) {
