@@ -265,3 +265,24 @@ select{
     color: rgba(0, 0, 0, 0.532);
     cursor: pointer;
 }
+
+/* jogadores */
+.player-box {
+    display: none;
+    justify-content: space-between;
+}
+
+.player {
+    padding: 10px;
+    text-align: center;
+}
+
+.white-player {
+    background-color: white;
+    color: black;
+}
+
+.black-player {
+    background-color: black;
+    color: white;
+}
