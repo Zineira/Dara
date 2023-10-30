@@ -112,7 +112,7 @@ select{
 #board {
     justify-content: center;
     align-items: center;
-    display: grid;
+    display: none;
     grid-template-columns: repeat(6, 50px);
     grid-template-rows: repeat(5, 50px);
     gap: 19px;
@@ -152,6 +152,15 @@ select{
     height: 80vh;
     
 }
+
+#scores{
+    border-spacing: 30px;
+    margin-left: 50px;
+    color: white;
+    font-size: 25px;
+    overflow: auto;
+    padding: 20px;
+}
 .square {
     width: 65px;
     height: 65px;
@@ -177,7 +186,7 @@ select{
     height: 80vh;
 }
 
-#instrbutton, #rankbutton, #play{
+#instrbutton, #rankbutton, #play,#reset{
     color: white;
     background-color: rgba(0,0,0,0);
     margin-left: 15px;
@@ -185,6 +194,12 @@ select{
     font-size: 25px;
     font-weight: bold;
     font-style: normal;
+}
+
+#reset{
+    margin-left:79px;
+    margin-top: 15px;
+    display:none;
 }
 
 
@@ -195,38 +210,46 @@ select{
     margin-left: 15px;
 }
 .pieces {
-    display: grid;
-    grid-template-columns: repeat(6, 50px);
+    display: none;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 300px; /* Ajuste conforme necessário */
     gap: 5px;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-/* Estilos das peças */
 .pieces div {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    margin-bottom: 5px; /* Ajuste conforme necessário */
 }
 
-.white{
-    width: 50px;
-    height: 50px;
-    background-color: white;
-    position: absolute;
-    box-shadow: 2px 2px 5px rgba(0,0,0);
-    border-radius: 50%;
-    
+
+.loginbox {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    background-color:rgba(104, 160, 229, 0.848);
+    border: 3px solid rgba(244, 230, 243, 0.468);
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
 }
-.black{
-    width: 50px;
-    height: 50px;
-    background-color: black;
-    margin-top:500px;
-    position: relative;
-    box-shadow: 2px 2px 5px rgba(0,0,0);
-    border-radius: 50%;
+
+.loginbox input {
+    margin: 5px;
+    padding: 5px;
 }
+
+.loginbox button {
+    margin: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
 
 #board_size:hover,
 #oponents:hover,
@@ -238,7 +261,7 @@ select{
     margin-top: 20px;
     margin-left: 80px;
 }
-#instrbutton:hover, #rankbutton:hover, #play:hover{
+#instrbutton:hover, #rankbutton:hover, #play:hover,#reset:hover{
     color: rgba(0, 0, 0, 0.532);
     cursor: pointer;
 }

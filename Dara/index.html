@@ -15,6 +15,11 @@
                 </span>
                 <p></p>
             </div>
+            <div class="loginbox">
+                <input type="text" id="username" placeholder="Username">
+                <input type="password" id="password" placeholder="Password">
+                <button id="loginbutton">Login</button>
+            </div>
             <div class="container">
     
                 <div class="leftbox">
@@ -27,28 +32,32 @@
                         <h1>Configurações</h1>
                         <div class = "defs">
                         <ul>
-                            <li id="board_size">Tabuleiro  <select>
+                            <li class="board_size">Tabuleiro 
+                                <select id="board_size">
                                 <option value="None">   -  </option>
                                 <option value="board1">5x6</option>
                                 <option value="board2">6x6</option>
                                 </select>
                             </li>
                             <p></p>
-                            <li id="oponents">Adversário   <select>
+                            <li class="oponents">Adversário
+                                <select id="oponents">
                                 <option value="None">-</option>
                                 <option value="twoplayer">Jogador</option>
                                 <option value="oneplayer">Computador</option>
                                 </select>
                             </li>
                             <p></p>
-                            <li id="firstsecond"> Brancas ou Pretas <select>
+                            <li class="firstsecond"> Brancas ou Pretas
+                                <select id="firstsecond">
                                 <option value="None"> - </option>
                                 <option value="white">Brancas</option>
                                 <option value="black">Pretas</option>
                                 </select>
                             </li>
                             <p></p>
-                            <li id="difficulty"> Dificuldade <select>
+                            <li class="difficulty"> Dificuldade
+                                <select id="difficulty">
                                 <option value="None">   -  </option>
                                 <option value="easy">Fácil</option>
                                 <option value="intermediate">Intermédio</option>
@@ -57,11 +66,24 @@
                             </li>
                             <p></p>
                             <button id="play">Jogar</button>
+                            <button id="reset">Reset</button>
                         </ul>
                         </div>
                     </div>
                 </div>
                 <div class="box-main">
+                    <div class="overlay" id="player-overlay">
+                        <div class="info-box">
+                            <div class="player-info">
+                                <div class="player-name" id="player-name">Jogador</div>
+                                <div class="player-piece" id="player-piece">Peças Brancas</div>
+                            </div>
+                            <div class="opponent-info">
+                                <div class="opponent-name" id="opponent-name">Oponente</div>
+                                <div class="opponent-piece" id="opponent-piece">Peças Pretas</div>
+                            </div>
+                        </div>
+                    </div>
                     <div class= "boards" id="board"></div>
                 </div>
                 
@@ -139,9 +161,26 @@
                         <li>O jogador que não pode ganhar perde o jogo</li>
                 </div>
             </div>
-            <div class="score"> Trollistar</div>
+            <div class="score">
+                <table id="scores">
+                    <tr>
+                        <th>Jogador</th>
+                        <th>Pontos</th>
+                        <th>Tabuleiro</th>
+                        <th>Adversário</th>
+                        <th>Dificuldade</th>
+                    </tr>
+                    <tr>
+                        <td>Jogador</td>
+                        <td>100</td>
+                        <td>6x5</td>
+                        <td>Computador</td>
+                        <td>Fácil</td>
+                    </tr>
+                </table>
+            </div>
             <div class="rightbox">
-                <div class ="pieces">
+                <div class ="pieces"></div>
 
             </div>
             <script src="login.js"></script>
