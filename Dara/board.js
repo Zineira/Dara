@@ -1,80 +1,5 @@
-const rightbox = document.querySelector('.rightbox');
-const pieces = document.querySelector('.pieces');
-const colors = ['#123456'];
-let opponentsSelect; // Declaração da variável opponentsSelect
-let difficultySelect; // Declaração da variável difficultySelect
-
-
-function createBoard(element){
-    element.innerHTML = '';
-
-    const SQUARES_NUM_1= document.getElementById('board_size').value;
-    const board_size = document.getElementById('board');
-    if (SQUARES_NUM_1 === 'board1'){
-        board_size.style.gridTemplateColumns = 'repeat(6, 50px)';
-        board_size.style.gridTemplateRows = 'repeat(5, 50px)';
-        for(let i =0;i <6*5;i++){
-            const square = document.createElement('div');
-            square.classList.add('square')
-
-            square.addEventListener('mouseover', () => setColor(square))
-            square.addEventListener('mouseout', () => resetColor(square))
-
-            element.append(square)
-        }
-    }else if(SQUARES_NUM_1 === 'board2'){
-        board_size.style.gridTemplateColumns = 'repeat(6, 50px)';
-        board_size.style.gridTemplateRows = 'repeat(6, 50px)';
-        for(let i =0;i <6*6;i++){
-            const square = document.createElement('div');
-            square.classList.add('square')
-
-            square.addEventListener('mouseover', () => setColor(square))
-            square.addEventListener('mouseout', () => resetColor(square))
-
-            element.append(square)
-        }
-    }    
-}
-
-// Crie e posicione as peças na "rightbox"
-function createPiece(color) {
-    const piece = document.createElement("div");
-    if (color === 'white') {
-        piece.className = "game-piece white-piece";  // Adicione a classe 'white-piece'
-    } else {
-        piece.className = "game-piece black-piece";  // Adicione a classe 'black-piece'
-    }
-    piece.className = "game-piece " + color;
-    piece.style.backgroundColor = color === 'white' ? 'white' : 'black';
-    return piece;
-}
-
-// Lista de peças (12 brancas e 12 pretas)
-const piece_list = [];
-for (let i = 0; i < 12; i++) {
-    piece_list.push(createPiece("white"));
-}
-for (let i = 0; i < 12; i++) {
-    piece_list.push(createPiece("black"));
-}
-piece_list.forEach(piece => pieces.appendChild(piece));
-
-function setColor(element) {
-    const color = getRandomColor();
-    element.style.backgroundColor = color;
-}
-
-function resetColor(element) {
-    element.style.backgroundColor = 'rgba(104, 160, 229, 0)';
-}
-
-function getRandomColor() {
-    const index = Math.floor(Math.random() * colors.length);
-    return colors[index];
-}
-// funçoes dos botões
-
+let game;
+let pieces = document.querySelector(".pieces-container")
 function checkSelections() {
     const boardSizeSelect = document.getElementById('board_size');
     const opponentsSelect = document.getElementById('oponents');
@@ -109,7 +34,7 @@ function updateBotName() {
     if (opponentsValue === 'oneplayer') {
         opponentName.textContent = "Bot " + difficultyText;
     } else {
-        opponentName.textContent = "Player2";
+        opponentName.textContent = "Player1";
     }
 }
 
@@ -121,8 +46,7 @@ window.onload = () => {
     const rulesbox = document.querySelector('.rules');
     const mainbox = document.querySelector('.box-main');
     const scorebox = document.querySelector('.score');
-    const overlay = document.querySelector('.overlay');
-
+    
     
     //Regras
     instructionsButton.addEventListener('click', function() {
@@ -130,12 +54,12 @@ window.onload = () => {
             rulesbox.style.display = 'block';
             mainbox.style.display = 'none';
             scorebox.style.display = 'none';
-            overlay.style.display = 'block'; // Mostra a cobertura
+            
         } else {
             rulesbox.style.display = 'none';
             mainbox.style.display = 'grid';
             scorebox.style.display = 'none';
-            overlay.style.display = 'none'; // Oculta a cobertura
+           
         }
     });
     //pontuaçoes
@@ -144,12 +68,11 @@ window.onload = () => {
             scorebox.style.display = 'block';
             mainbox.style.display = 'none';
             rulesbox.style.display = 'none';
-            overlay.style.display = 'block'; // Mostra a cobertura
+            
         } else {
             scorebox.style.display = 'none';
             mainbox.style.display = 'grid';
             rulesbox.style.display = 'none';
-            overlay.style.display = 'none'; // Oculta a cobertura
         }
     });
     //jogar
@@ -162,40 +85,50 @@ window.onload = () => {
     opponentsSelect.addEventListener('change', checkSelections);
     firstSecondSelect.addEventListener('change', checkSelections);
     difficultySelect.addEventListener('change', checkSelections);
-
     checkSelections();
     
     playButton.addEventListener('click', function(){
-        opponentsSelect = document.getElementById('oponents'); // Atualiza a variável opponentsSelect
+        game = new Game();
         checkSelections();
+        
         if (mainbox.style.display !== 'none') {
-            // Sempre exiba a board como uma grid quando o botão "Jogar" for clicado
             board.style.display = 'grid';
-            // Sempre crie (ou recrie) o tabuleiro quando o botão "Jogar" for clicado
-            createBoard(board);
-            pieces.style.display= 'flex'; 
             resetButton.style.display = 'block';
+        }else{
+            if (rulesbox.style.display !== 'none') {
+                rulesbox.style.display = 'none';
+                mainbox.style.display = 'grid';
+            }
+        
+            if (scorebox.style.display !== 'none') {
+                scorebox.style.display = 'none';
+                mainbox.style.display = 'grid';
+            }
         }
-        const playerBox = document.querySelector('.player-box');
-        const whitePlayer = document.querySelector('.white-player');
-        const blackPlayer = document.querySelector('.black-player');
-    
-        // Mostrar a caixa de informação do jogador
-        playerBox.style.display = 'flex';
-    
-        // Posicionar os elementos do jogador de acordo com a seleção
-        const firstSecondValue = firstSecondSelect.value;
-        if (firstSecondValue === 'white') {
-            whitePlayer.style.order = '1';  // A ordem de flex é 1 para o jogador branco
-            blackPlayer.style.order = '2';  // A ordem de flex é 2 para o jogador preto
-        } else if (firstSecondValue === 'black') {
-            whitePlayer.style.order = '2';  // A ordem de flex é 2 para o jogador branco
-            blackPlayer.style.order = '1';  // A ordem de flex é 1 para o jogador preto
-        }
+        game.board.createBoard(document.getElementById('board'));
+        game.pieces.initializePieces();
+        
         boardSizeSelect.disabled = true;
         opponentsSelect.disabled = true;
         firstSecondSelect.disabled = true;
         difficultySelect.disabled = true;
+
+
+        pieces.style.display = 'flex';
+
+        const playerBox = document.querySelector('.player-box');
+        playerBox.style.display = 'flex';
+    
+        const firstSecondValue = firstSecondSelect.value;
+        if (firstSecondValue === 'white') {
+            playerName.textContent = "Player1";
+            opponentName.textContent = "Bot";
+            updateBotName();
+        } else if (firstSecondValue === 'black') {
+            playerName.textContent = "Bot";
+            opponentName.textContent = "Player1";
+        }
+
     });
     // reset
     const resetButton = document.getElementById('reset');
@@ -211,7 +144,11 @@ window.onload = () => {
         firstSecondSelect.disabled = false;
         difficultySelect.disabled = false;
         pieces.style.display= 'none'; 
+        initializePieces();
         resetButton.style.display = 'none';
+        const playerBox = document.querySelector('.player-box');
+        playerBox.style.display = 'none';
+
     
     });
     const opponentDifficulty = document.getElementById('opponent-difficulty');
@@ -222,12 +159,6 @@ window.onload = () => {
 // Defina o valor inicial
 opponentsSelect.dispatchEvent(new Event('change'));
     
-    overlay.addEventListener('click', function() {
-        rulesbox.style.display = 'none';
-        mainbox.style.display = 'grid';
-        scorebox.style.display = 'none';
-        overlay.style.display = 'none';
-    });
 };
 
 //overlays dos jogadores
@@ -242,8 +173,7 @@ const opponentPiece = document.getElementById('opponent-piece');
 
 // Define as informações do jogador
 playerName.textContent = "Player1";  // Substitua "Seu Nome" pelo nome do jogador
-playerPiece.textContent = "Peças Brancas";
+
 
 // Define as informações do oponente (pode ser outro jogador ou computador)
 opponentName.textContent = "Bot";  // Substitua "Oponente" pelo nome do oponente
-opponentPiece.textContent = "Peças Pretas";

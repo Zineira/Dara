@@ -164,7 +164,7 @@ select{
 .square {
     width: 65px;
     height: 65px;
-    border: 2px solid rgba(42, 89, 146, 0.5);;
+    border: 2px solid rgba(42, 89, 146, 0.666);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -184,7 +184,9 @@ select{
     background-color:rgba(104, 160, 229, 0.848);
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
     height: 80vh;
+    display: flex;
 }
+
 
 #instrbutton, #rankbutton, #play,#reset{
     color: white;
@@ -209,24 +211,31 @@ select{
 #difficulty{
     margin-left: 15px;
 }
-.pieces {
-    display: none;
-    flex-direction: column;
+.white-pieces-container, .black-pieces-container {
+    display: flex;
     flex-wrap: wrap;
-    max-height: 300px; /* Ajuste conforme necessário */
-    gap: 5px;
-    justify-content: flex-start;
     align-items: center;
+    justify-content:center;
+    margin: 10px;
 }
 
-.pieces div {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    margin-bottom: 5px; /* Ajuste conforme necessário */
+.game-piece {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
+    width: 50px; /* Adjust as needed */
+    height: 50px; /* Adjust as needed */
+    margin-bottom: 5px;
+    border: 4px solid rgba(178, 168, 177, 0.695);
+    border-radius: 50%; /* Makes the div circular */
+    /* Other styling as needed */
 }
 
+.pieces-container {
+    display: none;
+    flex-wrap: wrap;
+    justify-content:space-between; /* centraliza os contêineres horizontalmente */
+    align-items: center; /* centraliza os contêineres verticalmente */
+    gap:130px;
+}
 
 .loginbox {
     position: fixed;
