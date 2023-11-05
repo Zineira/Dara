@@ -1,0 +1,23 @@
+[
+  {
+    "Jogador": "John Doe",
+    "Pontos": "3",
+    "Tabuleiro": "6x5",
+    "Adversário": "Bot",
+    "Dificuldade": "Difícil"
+  },
+  {
+    "Jogador": "John Doe",
+    "Pontos": "3",
+    "Tabuleiro": "6x5",
+    "Adversário": "Bot",
+    "Dificuldade": "Difícil"
+  },
+  {
+    "Jogador": "Eve",
+    "Pontos": "28",
+    "Tabuleiro": "41x42",
+    "Adversário": "Bot",
+    "Dificuldade": "Súper"
+  }
+]

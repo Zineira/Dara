@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Resultados do Jogo</title>
+  </head>
+  <body>
+    <h1>Resultados</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Jogador</th>
+          <th>Pontos</th>
+          <th>Tabuleiro</th>
+	  <th>Adversário</th>
+	  <th>Dificuldade</th>
+	  
+        </tr>
+      </thead>
+      <tbody id="table-body">
+      </tbody>
+    </table>
+    
+    <pre id="json-data"></pre>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          // Make an AJAX request to fetch the JSON file from your local server
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', 'resultados.json', true);
+
+          xhr.onreadystatechange = function () {
+              if (xhr.readyState === 4) {
+                  if (xhr.status === 200) {
+                      // Parse the JSON data
+                      var jsonData = JSON.parse(xhr.responseText);
+  // Create an HTML table from the JSON data
+      var tableBody = document.getElementById('table-body');
+      jsonData.forEach(function(row) {
+	  var tr = document.createElement('tr');
+	  tr.innerHTML = '<td>' + row.Jogador + '</td><td>' + row.Pontos+'</td><td>' + row.Tabuleiro + '</td><td>' + row.Adversário+'</td><td>' + row.Dificuldade +'</td>';
+	  tableBody.appendChild(tr);
+      });
+		  } else {
+                      console.error('Failed to load JSON file.');
+                  }
+              }
+          };
+          xhr.send();
+      });
+    </script>
+    
+          
+  </body>
+</html>
