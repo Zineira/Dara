@@ -144,7 +144,7 @@ window.onload = () => {
         firstSecondSelect.disabled = false;
         difficultySelect.disabled = false;
         pieces.style.display= 'none'; 
-        initializePieces();
+        game.pieces.initializePieces();
         resetButton.style.display = 'none';
         const playerBox = document.querySelector('.player-box');
         playerBox.style.display = 'none';

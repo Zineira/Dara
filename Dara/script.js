@@ -1,5 +1,9 @@
+///Estás a tratar dos erros das funções, usa o chatgpt para ires resolvendo os erros, tens de fazer mover as peças, updateboard view , captura de peças, check de vitoria, mensagens variaveis, e recolha dos dados
+
 class Game {
     constructor() {
+        this.totalPieces = 24; // Total de peças disponíveis
+        this.placedPiecesCount = 0;
         this.gamePhase = 'placement';
         this.currentPlayer = "white";
         this.board = new Board(this); // Pass the game instance to the Board
@@ -13,13 +17,14 @@ class Game {
     }
 
     switchGamePhase() {
-        if (this.gamePhase === 'placement' && this.board.checkIfAllPiecesPlaced()) {
+        if (this.gamePhase === 'placement') {
             this.gamePhase = 'movement';
             console.log('Game phase changed to movement');
         }
-        this.board.updateBoardView();
     }
-
+    updateBoardView(){
+    }
+    
     
 }
 
@@ -28,6 +33,7 @@ class Board {
         this.game = game; // Save the game reference
         this.boardState = [];
         this.colors = ['#123456']; // Define your colors if needed
+        this.lastPositions = {};
     }
     getRandomColor() {
         const index = Math.floor(Math.random() * this.colors.length);
@@ -41,15 +47,34 @@ class Board {
         element.style.backgroundColor = color;
     }
     addClickEvents(square) {
-        square.addEventListener('click', () => {
-            console.log(this.game.pieces.selectedPiece);
-            if (this.game.pieces.selectedPiece) {
-                this.game.pieces.placePieceOnBoard(square);
+            square.addEventListener('click', () => {
+                if (this.game.pieces.selectedPiece) {
+                    this.game.pieces.placePieceOnBoard(square);
+                } else {
+                    console.log('Nenhuma peça selecionada');
+                }
+            });
+    }
+
+    addDragEvents(square) {
+        square.addEventListener('dragover', (e) => {
+            e.preventDefault(); // Allows us to drop.
+            // You can add some visual feedback here.
+        });
+    
+        square.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const pieceId = e.dataTransfer.getData('text/plain');
+            const piece = document.getElementById(pieceId);
+            const targetSquare = e.target.closest('.square');
+            if (piece && targetSquare && this.game.gamePhase === 'movement') {
+                this.handlePieceMovement(piece, targetSquare);
             } else {
-                console.log('Nenhuma peça selecionada');
+                alert('Movimento inválido ou não permitido nesta fase!');
             }
         });
     }
+    
     addMouseEvents(square) {
         square.addEventListener('mouseover', () => this.setColor(square));
         square.addEventListener('mouseout', () => this.resetColor(square));
@@ -83,30 +108,16 @@ class Board {
         for (let i = 0; i < rows * cols; i++) {
             const square = document.createElement('div');
             square.classList.add('square');
-            // Atribuir as coordenadas de linha e coluna se necessário
-            square.dataset.row = Math.floor(i / cols);
-            square.dataset.col = i % cols;
-
+    
+            // Calculate row and col here
+            const row = Math.floor(i / cols);
+            const col = i % cols;
+            // Now we have 'row' and 'col' defined, we can set the id
+            square.id = `square-${row}-${col}`;
             this.addMouseEvents(square); // Adicionar eventos de mouse
             this.addClickEvents(square); // Adicionar eventos de click
-            
-            square.addEventListener('dragover', (e) => {
-                e.preventDefault(); // Isso permite que recebamos o evento drop.
-            });
-            
-            square.addEventListener('drop', (e) => {
-                e.preventDefault();
-                const startRow = parseInt(this.game.pieces.selectedPiece.dataset.row, 10);
-                const startCol = parseInt(this.game.pieces.selectedPiece.dataset.col, 10);
-                const endRow = parseInt(e.target.dataset.row, 10);
-                const endCol = parseInt(e.target.dataset.col, 10);
-            
-                // Chame movePiece somente se for a fase de movimento e o movimento for válido.
-                if (this.game.gamePhase === 'movement' && this.isValidMove(endRow, endCol, this.game.currentPlayer)) {
-                    this.game.pieces.movePiece(startRow, startCol, endRow, endCol);
-                    this.game.switchPlayer();
-                }
-            });
+            this.addDragEvents(square);
+    
             element.append(square); // Anexar a célula ao tabuleiro
         }
     }
@@ -164,11 +175,111 @@ class Board {
     // Call countInLine with appropriate direction for horizontal coun
 
     checkIfAllPiecesPlaced() {
-        return this.boardState.every(row => row.every(col => col !== null));
+        console.log('placedPiecesCount',this.game.placedPiecesCount)
+        console.log('totalPieces',this.game.totalPieces)
+        return this.game.placedPiecesCount === this.game.totalPieces;
     }
 
-    updateBoardView() {
+    ////////////////////////Movement////////////////////////////////
+
+    handlePieceMovement(piece, targetSquare) {
+        if (piece.dataset.color !== this.game.currentPlayer) {
+            console.log('Não é a vez das ',piece.dataset.color);
+            return;
+        }
+        
+        // Certifique-se de que o alvo é um quadrado válido
+        if (!targetSquare || !targetSquare.id.startsWith('square-')) return;
+    
+        const [_, targetRow, targetCol] = targetSquare.id.split('-');
+        const fromRow = parseInt(piece.dataset.row, 10);
+        const fromCol = parseInt(piece.dataset.col, 10);
+        const toRow = parseInt(targetRow, 10);
+        const toCol = parseInt(targetCol, 10);
+    
+        if (this.isMoveValid(fromRow, fromCol, toRow, toCol, piece.dataset.color)) {
+            this.movePiece(piece, toRow, toCol);
+            this.checkForCaptures(toRow, toCol, piece.dataset.color);
+            this.game.switchPlayer();
+        } else {
+            alert('Movimento inválido!');
+        }
     }
+    
+    isMoveValid(fromRow, fromCol, toRow, toCol, pieceColor) {
+        // Verifica se a peça pertence ao jogador atual
+        console.log('linhainicial',fromRow,'colunainicial', fromCol,'linhafinal', toRow,'colunafinal', toCol,'Color:', pieceColor);
+        
+        if (pieceColor !== this.game.currentPlayer) {
+            return false;
+        }
+        if (this.boardState[toRow][toCol] !== null) {
+            return false;
+        }
+        // Verifica movimento contíguo
+        const rowDiff = Math.abs(fromRow - toRow);
+        const colDiff = Math.abs(fromCol - toCol);
+        if ((rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1)) {
+            // Verifica se a peça não está retornando para a última posição
+            const pieceId = `piece-${pieceColor}-${fromRow}-${fromCol}`;
+            if (this.lastPositions[pieceId] && this.lastPositions[pieceId].row === toRow && this.lastPositions[pieceId].col === toCol) {
+                return false; // Não pode retornar à posição anterior
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    // Method getSquare in the Board class to get a square element based on its row and column
+    getSquare(row, col) {
+        // Assuming each square has an id like 'square-row-col'
+        return document.getElementById(`square-${row}-${col}`);
+    }
+    
+    movePiece(piece, toRow, toCol) {
+        const pieceId = piece.id;
+        const playerColor = this.game.currentPlayer;
+    
+        // Atualiza o estado do tabuleiro
+        const fromRow = parseInt(piece.dataset.row, 10);
+        const fromCol = parseInt(piece.dataset.col, 10);
+        this.boardState[fromRow][fromCol] = null;
+        this.boardState[toRow][toCol] = playerColor;
+    
+        // Move a peça visualmente
+        const destinationSquare = this.getSquare(toRow, toCol);
+        if (destinationSquare) {
+            destinationSquare.appendChild(piece);
+    
+            // Atualiza os dados da peça
+            piece.dataset.row = toRow.toString();
+            piece.dataset.col = toCol.toString();
+    
+            // Atualiza a última posição da peça
+            this.lastPositions[pieceId] = { row: toRow, col: toCol };
+        } else {
+            console.error(`No destination square found at row ${toRow} and col ${toCol}`);
+            return;
+        }
+    }
+    
+    
+    checkForCaptures(row, col, playerColor) {
+        // Verifica se uma linha de 3 foi formada em qualquer direção
+        const horizontal = this.countInDirection(row, col, 1, 0, playerColor) + this.countInDirection(row, col, -1, 0, playerColor) >= 3;
+        const vertical = this.countInDirection(row, col, 0, 1, playerColor) + this.countInDirection(row, col, 0, -1, playerColor) >= 3;
+    
+        if (horizontal || vertical) {
+            // Captura uma peça do oponente
+            this.captureOpponentPiece(playerColor);
+        }
+    }
+    
+    captureOpponentPiece(playerColor) {
+        // Implementa a lógica para capturar uma peça do oponente
+        // Isso pode envolver permitir que o jogador escolha uma peça do oponente para ser removida
+    }
+
 }
 
 class Pieces {
@@ -202,11 +313,17 @@ class Pieces {
         } else if (color === 'black') {
             this.piece.classList.add('black-player');
         }
+        //Para as peças terem um id
+        this.piece.id = `piece-${color}-${Date.now()}-${Math.random()}`;
+
         this.piece.addEventListener('click', () => this.selectPiece(this.piece));
         this.piece.draggable = true; // Isso permite que a peça seja arrastável.
         this.piece.addEventListener('dragstart', (e) => {
-        // Guarde uma referência para a peça arrastada.
-        this.selectedPiece = e.target;});
+            e.dataTransfer.setData('text/plain', e.target.id);
+
+            this.selectedPiece = e.target;
+            
+        });
         return this.piece;
     }
 
@@ -235,12 +352,12 @@ class Pieces {
     }
 
     placePieceOnBoard(square) {
-        const row = parseInt(square.dataset.row, 10);
-        const col = parseInt(square.dataset.col, 10);
-
+        const parts = square.id.split('-');
+        const row = parseInt(parts[1], 10);
+        const col = parseInt(parts[2], 10);
         if (this.game.gamePhase === 'placement') {
             // A lógica para verificar se o movimento é válido já está sendo feita, mas parece que está sendo passada a propriedade errada (string em vez de número)
-            if (this.game.board.isValidMove(row, col, this.game.currentPlayer)) {
+            if (this.board.isValidMove(row, col, this.game.currentPlayer)) {
                 // Então verificamos se o quadrado está vazio
                 if (!square.hasChildNodes()) {
                     const pieceToPlace = this.getNextPiece();
@@ -255,11 +372,24 @@ class Pieces {
                     // Cria um clone da peça e adiciona ao tabuleiro
                     const pieceClone = pieceToPlace.cloneNode(true);
                     pieceClone.classList.add('placed');
+                    pieceClone.dataset.row = row;
+                    pieceClone.dataset.col = col;
+                    
+                    pieceClone.addEventListener('dragstart', (e) => {
+                        if (this.game.gamePhase === 'movement') {
+                            e.dataTransfer.setData('text/plain', e.target.id);
+                            this.selectedPiece = e.target;
+                        } else {
+                            e.preventDefault(); // Isso impede que a peça seja arrastada na fase de colocação
+                        }
+                    });
+                    
+                    
                     square.appendChild(pieceClone);
                     
                     // Remove a peça original da seleção
                     pieceToPlace.remove();
-                    
+                    this.game.placedPiecesCount++;
                     // Alterna o jogador se o movimento foi válido
                     this.game.switchPlayer()
                 } else {
@@ -268,56 +398,12 @@ class Pieces {
             } else {
                 alert('Movimento inválido!');
             }
-        } else if (this.game.gamePhase === 'movement') {
-            // Movimento de peças
-            if (this.selectedPiece) {
-                // Verifique se a seleção e movimento são válidos
-                if (this.game.board.isValidMove(square.dataset.row, square.dataset.col, this.game.currentPlayer)) {
-                    this.movePiece(Board.boardState, parseInt(this.selectedPiece.dataset.row, 10), parseInt(this.selectedPiece.dataset.col, 10), row, col);
-                    Board.updateBoardView(); // Atualize o tabuleiro com base no novo estado
-                    this.game.switchPlayer() // Alterne para o próximo jogador
-                } else {
-                    alert('Movimento inválido!');
-                }
-            } else {
-                alert('Nenhuma peça selecionada para mover!');
-            }
-        }
-    }
-    movePiece(startRow, startCol, endRow, endCol) {
-        // Atualiza o estado do tabuleiro removendo a peça da posição inicial e colocando na posição final.
-        this.board.boardState[startRow][startCol] = null;
-        this.board.boardState[endRow][endCol] = this.game.currentPlayer;
-    
-        // Encontra a peça no DOM baseada nos dados de sua posição inicial.
-        const pieceElement = document.querySelector(`.square[data-row="${startRow}"][data-col="${startCol}"] .game-piece`);
-        const targetSquare = document.querySelector(`.square[data-row="${endRow}"][data-col="${endCol}"]`);
-    
-        if (pieceElement && targetSquare) {
-            // Remove a peça do quadrado inicial.
-            pieceElement.remove();
-            
-            // Adiciona a peça ao quadrado de destino.
-            targetSquare.appendChild(pieceElement);
-            
-            // Atualize os atributos de dados da peça com a nova posição.
-            pieceElement.dataset.row = endRow;
-            pieceElement.dataset.col = endCol;
-    
-            // Atualize a visualização.
-            this.board.updateBoardView();
-        }
-    }
-    selectPiece(pieceElement) {
-        if (pieceElement.dataset.color !== this.game.currentPlayer) {
-            return;
         }
 
-        if (this.selectedPiece) {
-            this.selectedPiece.classList.remove('selected');
+        
+        if (this.board.checkIfAllPiecesPlaced()) {
+            this.game.switchGamePhase();
         }
-        this.selectedPiece = pieceElement;
-        this.selectedPiece.classList.add('selected');
     }
 
     getNextPiece() {
