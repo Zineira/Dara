@@ -106,6 +106,7 @@ window.onload = () => {
             }
         }
         game.board.createBoard(document.getElementById('board'));
+        console.log(game.board.boardState);
         game.pieces.initializePieces();
         
         boardSizeSelect.disabled = true;

@@ -33,7 +33,10 @@ class Board {
         this.game = game; // Save the game reference
         this.boardState = [];
         this.colors = ['#123456']; // Define your colors if needed
-        this.lastPositions = {};
+        this.lastPositions = {
+            white: null,
+            black: null
+        };
     }
     getRandomColor() {
         const index = Math.floor(Math.random() * this.colors.length);
@@ -197,7 +200,7 @@ class Board {
         const toRow = parseInt(targetRow, 10);
         const toCol = parseInt(targetCol, 10);
     
-        if (this.isMoveValid(fromRow, fromCol, toRow, toCol, piece.dataset.color)) {
+        if (this.isMoveValid(piece,fromRow, fromCol, toRow, toCol)) {
             this.movePiece(piece, toRow, toCol);
             this.checkForCaptures(toRow, toCol, piece.dataset.color);
             this.game.switchPlayer();
@@ -206,25 +209,28 @@ class Board {
         }
     }
     
-    isMoveValid(fromRow, fromCol, toRow, toCol, pieceColor) {
+    isMoveValid(piece,fromRow, fromCol, toRow, toCol) {
         // Verifica se a peça pertence ao jogador atual
-        console.log('linhainicial',fromRow,'colunainicial', fromCol,'linhafinal', toRow,'colunafinal', toCol,'Color:', pieceColor);
-        
+        const pieceColor = piece.dataset.color; // 'white' ou 'black'
+        const lastPosition = this.lastPositions[pieceColor];
+        console.log(`Última posição conhecida para ${piece.dataset.color}:`, lastPosition);
+
+        if(isValidMove(piece,fromRow, fromCol, toRow, toCol))
+        // console.log('linhainicial',fromRow,'colunainicial', fromCol,'linhafinal', toRow,'colunafinal', toCol,'Color:', pieceColor);
         if (pieceColor !== this.game.currentPlayer) {
             return false;
         }
         if (this.boardState[toRow][toCol] !== null) {
             return false;
         }
+        if (lastPosition && lastPosition.row === toRow && lastPosition.col === toCol) {
+            console.log('Movimento para a última posição cancelado');
+            return false; // Não pode retornar à posição anterior
+        }
         // Verifica movimento contíguo
         const rowDiff = Math.abs(fromRow - toRow);
         const colDiff = Math.abs(fromCol - toCol);
         if ((rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1)) {
-            // Verifica se a peça não está retornando para a última posição
-            const pieceId = `piece-${pieceColor}-${fromRow}-${fromCol}`;
-            if (this.lastPositions[pieceId] && this.lastPositions[pieceId].row === toRow && this.lastPositions[pieceId].col === toCol) {
-                return false; // Não pode retornar à posição anterior
-            }
             return true;
         }
         return false;
@@ -238,6 +244,7 @@ class Board {
     
     movePiece(piece, toRow, toCol) {
         const pieceId = piece.id;
+        console.log(pieceId);
         const playerColor = this.game.currentPlayer;
     
         // Atualiza o estado do tabuleiro
@@ -250,13 +257,16 @@ class Board {
         const destinationSquare = this.getSquare(toRow, toCol);
         if (destinationSquare) {
             destinationSquare.appendChild(piece);
-    
+            const color = piece.dataset.color;
+            this.lastPositions[color] = { row: fromRow, col: fromCol };
+            console.log(`Atualizado lastPositions para ${color}:`, this.lastPositions[color]);
             // Atualiza os dados da peça
             piece.dataset.row = toRow.toString();
             piece.dataset.col = toCol.toString();
     
             // Atualiza a última posição da peça
-            this.lastPositions[pieceId] = { row: toRow, col: toCol };
+            
+            console.log('deu',this.lastPositions);
         } else {
             console.error(`No destination square found at row ${toRow} and col ${toCol}`);
             return;
@@ -287,6 +297,8 @@ class Pieces {
         this.board = board;
         this.game = game;
         this.selectedPiece = "white";
+        this.whitePieceCount = 0;
+        this.blackPieceCount = 0;
         
     }
     initializePieces() {
@@ -308,13 +320,17 @@ class Pieces {
         this.piece = document.createElement('div');
         this.piece.dataset.color = color;
         this.piece.classList.add('game-piece');
+        let pieceId;
         if (color === 'white') {
             this.piece.classList.add('white-player');
+            pieceId = `piece-white-${this.whitePieceCount}`;
+            this.whitePieceCount++;
         } else if (color === 'black') {
             this.piece.classList.add('black-player');
+            pieceId = `piece-black-${this.blackPieceCount}`;
+            this.blackPieceCount++;
         }
-        //Para as peças terem um id
-        this.piece.id = `piece-${color}-${Date.now()}-${Math.random()}`;
+    this.piece.id = pieceId;
 
         this.piece.addEventListener('click', () => this.selectPiece(this.piece));
         this.piece.draggable = true; // Isso permite que a peça seja arrastável.
@@ -398,6 +414,7 @@ class Pieces {
             } else {
                 alert('Movimento inválido!');
             }
+            console.log(this.board.boardState);
         }
 
         

@@ -22,7 +22,7 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.);
+    border: 1px solid rgba(255, 255, 255, 0.0);
 }
 
 .overlay {
@@ -37,6 +37,8 @@ body {
 }
 
 .leftbox{
+    align-items: center;
+    justify-content: center;
     overflow: auto;
     grid-column: 1;
     border-radius: 20px;
@@ -52,29 +54,30 @@ body {
 }
 
 .configs{
+    
     margin-top: 60px;
-    flex-wrap: wrap;
     margin-left: 25px;
     color: white;
     font-style: normal;
     font-size: 18px;
-    justify-content: left;
+    justify-content: center;
 }
 
 .defs{
-    margin-left:-50px;
+    display: block;
+    margin-top: 10px;
+    margin-left:-35px;
 }
 
 select{
     margin-left: 20px;
-    size: 25px;
     font-size: 18px;
     color: white;
     background-color: rgba(29, 27, 27, 0);
     border: none;
     text-align: center;
     cursor: pointer;
-    margin-top: 5px;
+    margin-top: 15px;
 }
 
 .loginbox{
@@ -117,6 +120,7 @@ select{
     grid-template-rows: repeat(5, 50px);
     gap: 19px;
 }
+
 .rules{
     display: none; 
     overflow: auto;
@@ -169,6 +173,7 @@ select{
     justify-content: center;
     align-items: center;
 }
+
 .square:hover {
     transition-duration: 0s;
 }
@@ -266,9 +271,10 @@ select{
 #difficulty:hover{
     color: rgba(0, 0, 0, 0.532);
 }
-#play{
+#play,#reset{
     margin-top: 20px;
-    margin-left: 80px;
+    margin-left:100px;
+    
 }
 #instrbutton:hover, #rankbutton:hover, #play:hover,#reset:hover{
     color: rgba(0, 0, 0, 0.532);

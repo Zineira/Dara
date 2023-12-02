@@ -4,14 +4,14 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>&#129513 DARA &#129513</title>
-        <link rel="stylesheet" href="dara.css"></link>
+        <title>&#129513; DARA &#129513;</title>
+        <link rel="stylesheet" href="dara.css">
     </head>
         <body>
             <div class = "logo">
                 <p></p>
                 <span>
-                    &#129513 DARA &#129513
+                    &#129513; DARA &#129513;
                 </span>
                 <p></p>
             </div>
@@ -31,45 +31,45 @@
                     <div class = 'configs'>
                         <h1>Configurações</h1>
                         <div class = "defs">
-                        <ul>
-                            <li class="board_size">Tabuleiro 
-                                <select id="board_size">
-                                <option value="None">   -  </option>
-                                <option value="board1">5x6</option>
-                                <option value="board2">6x6</option>
-                                </select>
-                            </li>
-                            <p></p>
-                            <li class="oponents">Adversário
-                                <select id="oponents">
-                                <option value="None">-</option>
-                                <option value="twoplayer">Jogador</option>
-                                <option value="oneplayer">Computador</option>
-                                </select>
-                            </li>
-                            <p></p>
-                            <li class="firstsecond"> Brancas ou Pretas
-                                <select id="firstsecond">
-                                <option value="None"> - </option>
-                                <option value="white">Brancas</option>
-                                <option value="black">Pretas</option>
-                                </select>
-                            </li>
-                            <p></p>
-                            <li class="difficulty"> Dificuldade
-                                <select id="difficulty">
-                                <option value="None">   -  </option>
-                                <option value="easy">Fácil</option>
-                                <option value="intermediate">Intermédio</option>
-                                <option value="hard">Difícil</option>
-                                </select>
-                            </li>
-                            <p></p>
-                            <button id="play">Jogar</button>
-                            <button id="reset">Reset</button>
-                        </ul>
+                            <ul>
+                                <li class="board_size">Tabuleiro 
+                                    <select id="board_size">
+                                    <option value="None">   -  </option>
+                                    <option value="board1">5x6</option>
+                                    <option value="board2">6x6</option>
+                                    </select>
+                                </li>
+
+                                <li class="oponents">Adversário
+                                    <select id="oponents">
+                                    <option value="None">-</option>
+                                    <option value="twoplayer">Jogador</option>
+                                    <option value="oneplayer">Computador</option>
+                                    </select>
+                                </li>
+                            
+                                <li class="firstsecond"> Brancas ou Pretas
+                                    <select id="firstsecond">
+                                    <option value="None"> - </option>
+                                    <option value="white">Brancas</option>
+                                    <option value="black">Pretas</option>
+                                    </select>
+                                </li>
+                            
+                                <li class="difficulty"> Dificuldade
+                                    <select id="difficulty">
+                                    <option value="None">   -  </option>
+                                    <option value="easy">Fácil</option>
+                                    <option value="intermediate">Intermédio</option>
+                                    <option value="hard">Difícil</option>
+                                    </select>
+                                </li>
+                                
+                            </ul>
                         </div>
                     </div>
+                    <button id="play">Jogar</button>
+                    <button id="reset">Reset</button>
                 </div>
                 <div class="box-main">
                     <div class="player-box">
@@ -88,76 +88,64 @@
                 
                 <div class = "rules">
                     <div id ="rules">
-                    <h3>Tabuleiro e Peças</h3>
-                        <li>O Dara joga-se num tabuleiro 6 linhas x 5 colunas</li>
-                            <li>Outras dimensões são possíveis, como 6 x 6</li>
-                            <li>Cada um dos 2 jogadores tem 12 peças</li>
-                            <li>Um jogador joga com preças pretas, outro com as brancas</li>
-                            <li>Todas as peças 22 estão sempre visíveis, no tabuleiro ou fora</li>
-                            <li>Peças fora do tabuleiro são agrupadas por cor, de cada lado</li>
-                        <p></p>
-                
-                    <h3>Regras Básicas</h3>
-                    
-                        <li>Jogadores escolhem uma cor e decidem quem joga primeiro</li>
-                            <li>Inicialmente o tabuleiro está vazio</li>
-                            <li>O jogo tem 2 fases:</li>
-                            <li>Fase 1 - Pôr as peças (drop)</li>
-                            <li>Fase 2 - Mover as peças (move)</li>
-                            <li>No exemplo acima o tabuleiro está entre as 2 fases</li>
-                    
-                    <p></p>
-                
-                    <h3>Em linha</h3>
-                    
-                        <li>São consideradas em linha</li>
-                            <li>sequências de 3 ou mais peças contíguas</li>
-                            <li>na horizontal ou vertical (não na diagonal)</li> 
-                            <li>todas da mesma cor</li>
-                            <li>No exemplo acima há apenas 2 linhas</li>
-                            <li>a 1ª coluna a contar da esquerda têm uma linha branca</li>
-                            <li>4ª linha a contar do topo tem uma linha preta</li>
-                    
-                    <p></p>
-                
-                    <h3>Pôr as peças</h3>
-                    
-                        <li>Jogadores põem alternadamente uma peça sua numa casa livre</li>
-                        <li>Não podem podem ser postas mais de 3 peças em linha</li>
-                        <li>Podem existir 3 peças em linha (mas não é vantajoso)</li>
-                        <li>No exemplo acima, cada jogador já colocou uma peça</li>
-                    
-                    <p></p>
-                
-                    <h3>Mover as Peças</h3>
-                    
-                        <li>Cada jogador move alternadamente uma peça da sua cor</li>
-                        <li>Uma peça só pode ser movida para uma casa contígua</li>
-                        <li>Peças movidas apenas na horizontal ou vertical (não na diagonal)</li>
-                        <li>Uma linha de tamanho 3 permite capturar peça do adversário
-                        </li>
-                        <li>Neste caso, remove uma peça do adversário à sua escolha
-                        </li>
-                        <li>Só uma peça é removida por jogada (mesmo sendo formadas várias linhas)
-                        </li>
-                        <li>Não podem ser formadas linhas com mais de 3 peças
-                        </li>
-                        <li>Uma peça não pode retornar à posição da jogada anterior
-                        </li>
-                        <li>Só poderá retornar a essa casa nas jogadas seguintes
-                        </li>
-                    
-                    <p></p>
-                
-                    <h3>Fim do Jogo</h3>
-                
-                        <li>O jogo termina quando um jogador não puder ganhar
-                        </li>
-                        <li>Por exemplo, se tiver apenas 2 peças no tabuleiro
-                        </li>
-                        <li>Ou se não puder realizar uma jogada válida
-                        </li>
-                        <li>O jogador que não pode ganhar perde o jogo</li>
+                        <ol>
+                            <li><h3>Tabuleiro e Peças</h3>
+                                <ul>
+                                    <li>O Dara joga-se num tabuleiro 6 linhas x 5 colunas</li>
+                                    <li>Outras dimensões são possíveis, como 6 x 6</li>
+                                    <li>Cada um dos 2 jogadores tem 12 peças</li>
+                                    <li>Um jogador joga com preças pretas, outro com as brancas</li>
+                                    <li>Todas as peças 22 estão sempre visíveis, no tabuleiro ou fora</li>
+                                    <li>Peças fora do tabuleiro são agrupadas por cor, de cada lado</li>
+                                </ul>
+                            </li>
+                            <li><h3>Regras Básicas</h3>
+                                <ul>
+                                    <li>Jogadores escolhem uma cor e decidem quem joga primeiro</li>
+                                    <li>Inicialmente o tabuleiro está vazio</li>
+                                    <li>O jogo tem 2 fases:</li>
+                                    <li>Fase 1 - Pôr as peças (drop)</li>
+                                    <li>Fase 2 - Mover as peças (move)</li>
+                                </ul>
+                            </li>
+                            <li><h3>Em linha</h3>
+                               <ul>
+                                    <li>São consideradas em linha</li>
+                                    <li>sequências de 3 ou mais peças contíguas</li>
+                                    <li>na horizontal ou vertical (não na diagonal)</li> 
+                                    <li>todas da mesma cor</li>
+                                </ul>
+                            </li>
+                            <li><h3>Pôr as peças</h3>
+                                <ul>
+                            
+                                    <li>Jogadores põem alternadamente uma peça sua numa casa livre</li>
+                                    <li>Não podem podem ser postas mais de 3 peças em linha</li>
+                                    <li>Podem existir 3 peças em linha (mas não é vantajoso)</li>
+                                </ul>
+                            </li>
+                            <li><h3>Mover as Peças</h3>
+                                <ul>
+                        
+                                    <li>Cada jogador move alternadamente uma peça da sua cor</li>
+                                    <li>Uma peça só pode ser movida para uma casa contígua</li>
+                                    <li>Peças movidas apenas na horizontal ou vertical (não na diagonal)</li>
+                                    <li>Uma linha de tamanho 3 permite capturar peça do adversário</li>
+                                    <li>Só uma peça é removida por jogada (mesmo sendo formadas várias linhas)</li>
+                                    <li>Não podem ser formadas linhas com mais de 3 peças</li>
+                                    <li>Uma peça não pode retornar à posição da jogada anterior</li>
+                                    <li>Só poderá retornar a essa casa nas jogadas seguintes</li>
+                                </ul>
+                            </li>
+                            <li><h3>Fim do Jogo</h3>
+                                <ul>
+                                    <li>O jogo termina quando um jogador não puder ganhar</li>
+                                    <li>Por exemplo, se tiver apenas 2 peças no tabuleiro</li>
+                                    <li>Ou se não puder realizar uma jogada válida</li>
+                                    <li>O jogador que não pode ganhar perde o jogo</li>
+                                </ul>
+                            </li>
+                        </ol>
                 </div>
             </div>
             <div class="score">
@@ -186,5 +174,6 @@
             </div>
             <script src="script.js"></script>
             <script src="board.js"></script>
+        </div>
         </body>
         
