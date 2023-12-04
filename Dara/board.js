@@ -46,6 +46,8 @@ window.onload = () => {
     const rulesbox = document.querySelector('.rules');
     const mainbox = document.querySelector('.box-main');
     const scorebox = document.querySelector('.score');
+    const boardSizeSelect = document.getElementById('board_size');
+    const firstSecondSelect = document.getElementById('firstsecond');
     
     
     //Regras
@@ -76,9 +78,7 @@ window.onload = () => {
         }
     });
     //jogar
-    const boardSizeSelect = document.getElementById('board_size');
     opponentsSelect = document.getElementById('oponents');
-    const firstSecondSelect = document.getElementById('firstsecond');
     difficultySelect = document.getElementById('difficulty');
 
     boardSizeSelect.addEventListener('change', checkSelections);

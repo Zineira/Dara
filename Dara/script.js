@@ -215,7 +215,6 @@ class Board {
         const lastPosition = this.lastPositions[pieceColor];
         console.log(`Última posição conhecida para ${piece.dataset.color}:`, lastPosition);
 
-        if(isValidMove(piece,fromRow, fromCol, toRow, toCol))
         // console.log('linhainicial',fromRow,'colunainicial', fromCol,'linhafinal', toRow,'colunafinal', toCol,'Color:', pieceColor);
         if (pieceColor !== this.game.currentPlayer) {
             return false;
