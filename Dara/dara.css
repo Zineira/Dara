@@ -101,7 +101,8 @@ select{
 }
 
 .box-main {
-    display:grid;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     grid-column: span 3;
@@ -111,7 +112,14 @@ select{
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.834);
     height: 80vh;
 }
-
+#gameMessage{
+    display: none;
+    text-align: center; /* Centraliza o texto */
+    margin-bottom: 50px; /* Espaço entre a mensagem e o tabuleiro */
+    font-size: 25px;
+    font-weight: bold; /* Tamanho da fonte */
+    color: white; 
+}
 #board {
     justify-content: center;
     align-items: center;
