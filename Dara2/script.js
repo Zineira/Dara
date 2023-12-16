@@ -1,11 +1,9 @@
-///Estás a tratar dos erros das funções, usa o chatgpt para ires resolvendo os erros, tens de fazer mover as peças, updateboard view , captura de peças, check de vitoria, mensagens variaveis, e recolha dos dados
-
 class Game {
     constructor() {
-        this.totalPiecesWhite = 4;
-        this.totalPiecesBlack = 4;
-        this.onBoardWhite = 4;
-        this.onBoardBlack = 4;
+        this.totalPiecesWhite = 12;
+        this.totalPiecesBlack = 12;
+        this.onBoardWhite = 12;
+        this.onBoardBlack = 12;
         this.placedPiecesCount = 0;
         this.gamePhase = 'placement';
         this.currentPlayer = "white";
@@ -75,6 +73,7 @@ class Game {
                 console.error(error.stack);
                 throw error; 
             });
+        
     }
 
     
@@ -155,6 +154,43 @@ class Game {
 
     }
     
+
+
+
+    
+    sendPlay(row, col) {
+        const playData = {
+            nick: this._username,
+            password: this._password,
+            game: this._gameId,
+            move: { "row": row, "column": col }
+        };
+        console.log(playData.move);
+
+        return fetch('http://twserver.alunos.dcc.fc.up.pt:8008/notify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(playData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Play response:', data);
+            // Additional logic after successfully sending the play
+            return data;
+        })
+        .catch(error => {
+            console.error('Error sending play:', error);
+            throw error;
+        });
+        
+    }
     
     switchPlayer() {
         this.currentPlayer = this.currentPlayer === "white" ? "black" : "white";
@@ -233,7 +269,14 @@ class Board {
             square.addEventListener('click', () => { 
                 if(this.game.gamePhase ==='placement'){
                     if (this.game.pieces.selectedPiece) {
+                        
                         this.game.pieces.placePieceOnBoard(square);
+
+
+                        const parts = square.id.split('-');
+                        const r = parseInt(parts[1], 10);
+                        const c = parseInt(parts[2], 10);
+                        //console.log('quadrado',row, col);
                     }
                 } else {
                     if(this.game.board.cancapture) {
@@ -623,6 +666,8 @@ class Pieces {
         this.game.updateGameMessage(messageKey);
 
         if (this.board.isValidMove(row, col, this.game.currentPlayer)) {
+            // Place move
+            this.game.sendPlay(row, col)
             if (!square.hasChildNodes()) {
                 const pieceToPlace = this.getNextPiece();
                 
@@ -633,6 +678,15 @@ class Pieces {
                 pieceClone.dataset.row = row;
                 pieceClone.dataset.col = col;
                 
+
+
+
+
+
+
+
+
+
                 pieceClone.addEventListener('dragstart', (e) => {
                     if (this.game.gamePhase === 'movement') {
                         e.dataTransfer.setData('text/plain', e.target.id);

@@ -118,10 +118,41 @@ window.onload = () => {
             });
     });
 
+
+
+
+    function getGameData(username, gameId) {
+        // Assuming you have the correct endpoint for retrieving game data
+        const url = `http://twserver.alunos.dcc.fc.up.pt:8008/update?nick=${username}&game=${gameId}`;
+
+        return fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Game data:', data);
+            // Process the data or return it as needed
+            return data;
+        })
+        .catch(error => {
+            console.error('Error getting game data:', error.message);
+            console.error(error.stack);
+            throw error;
+        });
+    }
+
     function displayRanking(ranking) {
         // Clear previous content in the ranking container
         rankingContainer.innerHTML = '';
-    
+
         // Check if there are entries in the ranking
         if (ranking.length > 0) {
             // Create elements to display each ranking entry
@@ -242,5 +273,4 @@ window.onload = () => {
         checkSelections();
     
     });
-    
 };
